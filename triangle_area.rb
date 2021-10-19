@@ -1,5 +1,4 @@
 #simple triangle draw
-n = 4
 br = "\n" * 2
 puts "========================================"
 puts "Let's calculate the area of a triangle !#{br}"
