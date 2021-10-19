@@ -1,3 +1,4 @@
+#simple triangle draw
 n = 4
 br = "\n" * 2
 puts "========================================"
@@ -13,7 +14,7 @@ i = 1
   i += 1
 end
 print br
-
+#============================================
 puts "What is the base of the triangle?"
 base = gets.chomp.to_i
 puts "What is the height of the triangle?"
