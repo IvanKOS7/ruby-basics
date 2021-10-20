@@ -12,6 +12,8 @@ if (first_side == second_side) && (third_side == first_side)
 else
   array = []
   array << first_side << second_side << third_side
+  #first_value, second_value, max_value = [first_side, second_side, third_side].sort
+
 #print array
 #max_value = potentially hypotenuse
 #сюда будет сохраняться максимальное значение
