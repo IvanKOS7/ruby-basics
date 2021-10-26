@@ -24,8 +24,7 @@ class Route
   attr_reader :stations
 
   def initialize(start_station, final_station)
-    @stations = []
-    @stations << start_station << final_station
+    @stations = [start_station, final_station]
   end
 
   def add_way_station(way_station)
@@ -57,7 +56,7 @@ class Train
   def unhook_wagon
     if @speed == 0
       @wagon_amount -= 1
-      puts "You unhooked the wagon now. Wagon's amount: #{@wagon_amount}"
+      return @wagon_amount
     else
       puts "Stop the train first!"
     end
@@ -66,7 +65,7 @@ class Train
   def add_wagon
     if @speed == 0
       @wagon_amount += 1
-      puts "You add the wagon now. Wagon's amount: #{@wagon_amount}"
+      return @wagon_amount
     else
       puts "Stop the train first!"
     end
@@ -82,14 +81,14 @@ class Train
     @train_route.stations[@station_selector]
   end
 
-  def next_station
-    if current_station != @train_route.stations.last
+  def move_to_next_station
+    if show_next_station
       @station_selector += 1
       @train_route.stations[@station_selector]
     end
   end
 
-  def last_station
+  def move_to_last_station
     if @station_selector > 0
       @station_selector -= 1
       @train_route.stations[@station_selector]
@@ -99,16 +98,12 @@ class Train
   def show_next_station
     if current_station != @train_route.stations.last
       @train_route.stations[@station_selector + 1]
-    else
-      puts "It's last station"
     end
   end
 
   def show_last_station
     if @station_selector > 0
      @train_route.stations[@station_selector + 1]
-    else
-      puts "It's starting station"
     end
   end
 end
