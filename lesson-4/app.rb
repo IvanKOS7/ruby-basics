@@ -46,7 +46,6 @@ class Train
     @type = type
     @wagon_amount = wagon_amount
     @speed = speed
-    @train_route = train_route
   end
 
   def stop
