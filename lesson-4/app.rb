@@ -24,8 +24,6 @@ class Route
   attr_reader :stations
 
   def initialize(start_station, final_station)
-    @start_station = start_station
-    @final_station = final_station
     @stations = []
     @stations << start_station << final_station
   end
@@ -81,16 +79,36 @@ class Train
   end
 
   def current_station
-    puts "Your station #{@train_route.stations[@station_selector]}"
+    @train_route.stations[@station_selector]
   end
 
-  def forward_station
-    @station_selector += 1
-    puts "Your station #{@train_route.stations[station_selector]}"
+  def next_station
+    if current_station != @train_route.stations.last
+      @station_selector += 1
+      @train_route.stations[@station_selector]
+    end
   end
 
   def last_station
-    @station_selector -= 1
-    puts "Your station #{@train_route.stations[station_selector]}"
+    if @station_selector > 0
+      @station_selector -= 1
+      @train_route.stations[@station_selector]
+    end
+  end
+
+  def show_next_station
+    if current_station != @train_route.stations.last
+      @train_route.stations[@station_selector + 1]
+    else
+      puts "It's last station"
+    end
+  end
+
+  def show_last_station
+    if @station_selector > 0
+     @train_route.stations[@station_selector + 1]
+    else
+      puts "It's starting station"
+    end
   end
 end
