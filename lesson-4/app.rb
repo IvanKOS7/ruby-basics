@@ -38,8 +38,9 @@ end
 
 
 class Train
-  attr_accessor :speed, :wagon_amount, :train_route
-
+  attr_accessor :speed, :wagon_amount
+  arrt_reader :train_route
+  
   def initialize(train_number, type, wagon_amount, speed = 0)
     @train_number = train_number
     #:passenger, :cargo
