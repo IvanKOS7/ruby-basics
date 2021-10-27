@@ -55,7 +55,6 @@ class Train
   def unhook_wagon
     if @speed == 0
       @wagon_amount -= 1
-      return @wagon_amount
     else
       puts "Stop the train first!"
     end
@@ -64,7 +63,6 @@ class Train
   def add_wagon
     if @speed == 0
       @wagon_amount += 1
-      return @wagon_amount
     else
       puts "Stop the train first!"
     end
