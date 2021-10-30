@@ -14,7 +14,7 @@ attr_reader :station_name, :trains
     trains.delete(train)
   end
 
-  def trains_type(type)
+  def show_trains_type(type)
      @trains.count { |train| train.type == type }
    end
 end
