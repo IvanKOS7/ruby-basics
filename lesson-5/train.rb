@@ -37,27 +37,29 @@ class Train
   end
 
   def move_to_next_station
-    #здесь скорее всего нужно какое-то условие
+    if show_next_station
       @station_selector += 1
       @current_route.stations[@station_selector]
+    end
   end
 
   def move_to_last_station
-    #здесь тоже
+    if @station_selector > 0
       @station_selector -= 1
       @current_route.stations[@station_selector]
+    end
   end
-
+private #потомкам нет необходимости знать это, функционал не требует
   def show_next_station
-    #пока не могу понять надо ли мне это вообще
-    if current_station != @train_route.stations.last
-      @train_route.stations[@station_selector + 1]
+
+    if current_station != @current_route.stations.last
+      @current_route.stations[@station_selector + 1]
     end
   end
 
   def show_last_station
     if @station_selector > 0
-     @train_route.stations[@station_selector + 1]
+     @current_route.stations[@station_selector + 1]
     end
   end
 end

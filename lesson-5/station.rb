@@ -9,7 +9,7 @@ attr_reader :station_name, :trains
   def add_train(train)
     trains << train
   end
-
+private #потомкам нет необходимости знать это, функционал не требует
   def send_train(train)
     trains.delete(train)
   end

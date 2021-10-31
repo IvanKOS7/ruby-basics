@@ -20,6 +20,7 @@ attr_reader :stations, :routes, :trains
   puts "It's RailRoad simulator!"
 
   def menu
+    loop do
     puts "Enter 1, if you want to create: train, station, route or wagon"
     puts "Enter 2, if want to do something"
     puts "Enter 3, to show info"
@@ -31,14 +32,17 @@ attr_reader :stations, :routes, :trains
       when 1 then create
       when 2 then operations
       when 3 then info
+      when 0 then break
     end
+   end
   end
 
   def create
-    puts "Enter 1, if you want create train"
+    puts "Enter 1, if you want create station"
     puts "Enter 2, if you want create route"
     puts "Enter 3, if you want create train"
     puts "Enter 4, if you want create wagon"
+
 
     choice_2 = gets.chomp.to_i
 
@@ -47,16 +51,17 @@ attr_reader :stations, :routes, :trains
       when 2 then create_route
       when 3 then create_train
       when 4 then create_wagon
+      else puts "Enter 1-4 numbers"
     end
     puts "ok"
   end
 
   def operations
     puts "Enter 1, if you want add station to route"
-    puts "Enter 1, if you want delete station on route"
+    puts "Enter 2, if you want delete station on route"
     puts "Enter 3, if you want add route for train"
     puts "Enter 4, if you want hook wagon to train"
-    puts "Enter 4, if you want unhook wagon from the train"
+    puts "Enter 5, if you want unhook wagon from the train"
     puts "Enter 6, if you want move train to next station"
     puts "Enter 7, if you want move train to last station"
 
@@ -79,21 +84,21 @@ attr_reader :stations, :routes, :trains
   choice_4 = gets.chomp.to_i
     case choice_4
     when 1 then station_list
-      when 2 then trains on station
+      when 2 then trains_list_on_station
     end
   end
 
   def create_station
     puts "Create station"
-    puts "Enter station name "
+    puts "Enter new station name: "
     station_name = gets.chomp
     @stations << Station.new(station_name)
-    puts "You are create station #{station_name}"
+    puts "Station created: #{find_station(station_name)}"
   end
 
   def create_route
     puts "Route creation menu"
-    puts "Enter name of route"
+    puts "Enter name of new route"
     route_name = gets.chomp
     puts "Enter name of start station from station list: "
     puts @stations.inspect
@@ -105,7 +110,7 @@ attr_reader :stations, :routes, :trains
     object_final_station = find_station(final_station)
     puts "Final station: #{object_final_station}"
     @routes << Route.new(route_name, object_start_station, object_final_station)
-    puts "ok"
+    puts "Ok, you are created new route: #{find_route(route_name)}"
   end
 
   def create_train
@@ -129,8 +134,8 @@ attr_reader :stations, :routes, :trains
   def create_wagon
     puts "Wagon creation menu"
     puts "Set type of wagon"
-    puts "If it's cargo wagon enter 1"
-    puts "If it's passenger wagon enter 2"
+    puts "Cargo wagon - enter 1"
+    puts "Passenger wagon - enter 2"
     choice_wagon_type = gets.chomp.to_i
       case choice_wagon_type
         when 1 then
@@ -153,16 +158,17 @@ attr_reader :stations, :routes, :trains
     route = gets.chomp.to_s
     object_route = find_route(route)
     object_route.add_way_station(object_way_station)
+    puts "Route list updated: #{@routes}"
   end
 
   def delete_way_station
     puts "Delete station operator"
-    puts "Enter name of route which you want to delete"
+    puts "Enter name of route:"
     puts @routes.inspect
     route = gets.chomp.to_s
     object_route = find_route(route)
     puts "Enter name of station which you want to delete"
-    puts object_route.stations
+    puts "#{object_route.stations}"
     station_name = gets.chomp.to_s
     puts "You set: #{find_station(station_name)}"
     object_station = find_station(station_name)
@@ -181,16 +187,17 @@ attr_reader :stations, :routes, :trains
     train_name = gets.chomp.to_s
     object_train = find_train(train_name)
     object_train.take_route(object_route)
+    puts "For train: #{object_train} Route now: #{object_route} "
   end
 
   def add_wagon
     puts "Add wagon menu"
-    puts "Set train, enter train_number"
+    puts "Set train name from list:"
     puts "#{@trains}"
     train_name = gets.chomp.to_s
     object_train = find_train(train_name)
-    puts "If it's cargo wagon enter 1"
-    puts "If it's passenger wagon enter 2"
+    puts "Cargo wagon: enter 1"
+    puts "Passenger wagon: enter 2"
     choice_wagon_type = gets.chomp.to_i
       case choice_wagon_type
         when 1 then
@@ -199,7 +206,7 @@ attr_reader :stations, :routes, :trains
             object_train.add_wagon(wagon)
             puts "Congratulation! Cargo wagon created and hook to train"
           else
-            puts "No"
+            puts "No. Types of carriage and train do not match"
           end
         when 2 then
 
@@ -209,7 +216,7 @@ attr_reader :stations, :routes, :trains
             object_train.add_wagon(wagon)
             puts "Congratulation! Passenger wagon created and hook to train"
           else
-            puts "No"
+            puts "No. Types of carriage and train do not match"
           end
       end
   end
@@ -217,9 +224,9 @@ attr_reader :stations, :routes, :trains
   def unhook_wagon
     #мы будем удалять и прицеплять указанное количество вагонов из массива @wagon_amount
     puts "Unhook wagon menu"
+    puts "Set train, enter train name"
     puts "#{@trains}"
     train_name = gets.chomp.to_s
-    puts "Set train, enter train_number"
     object_train = find_train(train_name)
     puts "#{object_train.wagon_amount}"
     puts "Set SUM of wagons"
@@ -234,10 +241,7 @@ attr_reader :stations, :routes, :trains
     puts "#{@trains}"
     train  = gets.chomp.to_s
     train_object = find_train(train)
-  puts "Current_station: #{train_object.current_station}"
-  #в задании ни слова про добавления поезда на станцию в интерфейсе
-  #зато есть -список поездов на станции-
-  #наверное логично, что та станция на которой находится поезд как раз таки и нужна
+    puts "Current_station: #{train_object.current_station}"
     train_object.current_station.trains << train_object
   end
 
@@ -247,11 +251,11 @@ attr_reader :stations, :routes, :trains
     puts "#{@trains}"
     train  = gets.chomp.to_s
     train_object = find_train(train)
-  puts "Current_station now: #{train_object.current_station}"
-     object_station = train_object.current_station
-     puts "#{object_station}"
-     current_station = train_object.move_to_next_station
-     puts "Current_station: #{current_station}"
+    puts "Current_station: #{train_object.current_station}"
+    object_station = train_object.current_station
+    puts "#{object_station}"
+    current_station = train_object.move_to_next_station
+    puts "Current_station NOW: #{current_station}"
   end
 
   def move_to_last_station
@@ -260,27 +264,27 @@ attr_reader :stations, :routes, :trains
     puts "#{@trains}"
     train  = gets.chomp.to_s
     train_object = find_train(train)
-    puts "Current_station now: #{train_object.current_station}"
+    puts "Current_station: #{train_object.current_station}"
     object_station = train_object.current_station
     puts "#{object_station}"
     current_station = train_object.move_to_last_station
-    puts "Current_station: #{current_station}"
+    puts "Current_station NOW: #{current_station}"
   end
 
 #def info
 
 
   def station_list
-    puts @stations
+    puts "#{@stations}"
   end
 
-  def train_list
+  def trains_list_on_station
     puts "Set station"
     puts "#{@stations}"
     #поменять переменные
-    x = gets.chomp.to_s
-    sel = find_station(x)
-    puts "Trains: #{sel.trains}"
+    station = gets.chomp.to_s
+    station_choice = find_station(station)
+    puts "Trains: #{station_choice.trains}"
 
   end
 
@@ -300,21 +304,21 @@ attr_reader :stations, :routes, :trains
     @trains.find {|train| train.train_name == name}
   end
 
-def seed
-  station_name = "go"
-  @stations << Station.new(station_name)
-  station_name = "foo"
-  @stations << Station.new(station_name)
-  station_name = "bar"
-  @stations << Station.new(station_name)
-  start_station = find_station("go")
-  final_station = find_station("bar")
-  route_name = "msc"
-  Route.new(route_name, start_station, final_station)
-  @routes << Route.new(route_name, start_station, final_station)
-  @trains << PassengerTrain.new('tomas')
-  @wagons << CargoWagon.new
-end
+  def seed
+    station_name = "go"
+    @stations << Station.new(station_name)
+    station_name = "foo"
+    @stations << Station.new(station_name)
+    station_name = "bar"
+    @stations << Station.new(station_name)
+    start_station = find_station("go")
+    final_station = find_station("bar")
+    route_name = "msc"
+    Route.new(route_name, start_station, final_station)
+    @routes << Route.new(route_name, start_station, final_station)
+    @trains << PassengerTrain.new('tomas')
+    @wagons << CargoWagon.new
+  end
 end
 @rr = RailRoad.new
 @rr.seed
