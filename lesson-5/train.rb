@@ -17,11 +17,15 @@ class Train
   end
 
   def unhook_wagon(wagon_sum)
-    del = @wagon_amount.shift(wagon_sum)
+    if @speed == 0 && train_type == wagon.wagon_type
+     delete_wagon = @wagon_amount.shift(wagon_sum)
+   end
   end
 
   def add_wagon(wagon)
-    @wagon_amount << wagon
+    if @speed == 0 && train_type == wagon.wagon_type
+      @wagon_amount << wagon
+    end
   end
 
   def take_route(route)

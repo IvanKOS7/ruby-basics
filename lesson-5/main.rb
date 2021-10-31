@@ -4,23 +4,38 @@ require_relative 'station'
 require_relative 'train'
 require_relative 'passenger_train'
 require_relative 'cargo_train'
-require_relative 'wagons'
+require_relative 'wagon'
 require_relative 'passenger_wagon'
 require_relative 'cargo_wagon'
 
 class RailRoad
-attr_reader :stations, :routes, :trains
+  attr_reader :stations, :routes, :trains
   def initialize
     @stations = []
     @routes = []
     @trains = []
     @wagons = []
-    @rr
   end
-  puts "It's RailRoad simulator!"
+
+  def seed
+    station_name = "go"
+    @stations << Station.new(station_name)
+    station_name = "foo"
+    @stations << Station.new(station_name)
+    station_name = "bar"
+    @stations << Station.new(station_name)
+    start_station = find_station("go")
+    final_station = find_station("bar")
+    route_name = "msc"
+    Route.new(route_name, start_station, final_station)
+    @routes << Route.new(route_name, start_station, final_station)
+    @trains << PassengerTrain.new('tomas')
+    @wagons << CargoWagon.new
+  end
 
   def menu
     loop do
+    puts "It's RailRoad simulator!"
     puts "Enter 1, if you want to create: train, station, route or wagon"
     puts "Enter 2, if want to do something"
     puts "Enter 3, to show info"
@@ -36,13 +51,12 @@ attr_reader :stations, :routes, :trains
     end
    end
   end
-
+private
   def create
     puts "Enter 1, if you want create station"
     puts "Enter 2, if you want create route"
     puts "Enter 3, if you want create train"
     puts "Enter 4, if you want create wagon"
-
 
     choice_2 = gets.chomp.to_i
 
@@ -209,9 +223,7 @@ attr_reader :stations, :routes, :trains
             puts "No. Types of carriage and train do not match"
           end
         when 2 then
-
           wagon  = PassengerWagon.new
-
           if wagon.wagon_type == object_train.train_type #почему-то в одну строку не работает
             object_train.add_wagon(wagon)
             puts "Congratulation! Passenger wagon created and hook to train"
@@ -273,7 +285,6 @@ attr_reader :stations, :routes, :trains
 
 #def info
 
-
   def station_list
     puts "#{@stations}"
   end
@@ -303,23 +314,7 @@ attr_reader :stations, :routes, :trains
   def find_train(name)
     @trains.find {|train| train.train_name == name}
   end
-
-  def seed
-    station_name = "go"
-    @stations << Station.new(station_name)
-    station_name = "foo"
-    @stations << Station.new(station_name)
-    station_name = "bar"
-    @stations << Station.new(station_name)
-    start_station = find_station("go")
-    final_station = find_station("bar")
-    route_name = "msc"
-    Route.new(route_name, start_station, final_station)
-    @routes << Route.new(route_name, start_station, final_station)
-    @trains << PassengerTrain.new('tomas')
-    @wagons << CargoWagon.new
-  end
 end
-@rr = RailRoad.new
-@rr.seed
-@rr.menu
+rr = RailRoad.new
+rr.seed
+rr.menu
