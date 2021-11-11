@@ -26,7 +26,7 @@ class Train
 
   #block  {|wagon| wagon}
   def wagons_block
-     @wagon_amount.each {|wagon| yield}
+     @wagon_amount.each {|wagon| yield wagon}
   end
 
   def validate!

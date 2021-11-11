@@ -17,7 +17,7 @@ class Station
   #block  {|train| train}
 
   def trains_block
-     @trains.each {|train| yield}
+     @trains.each {|train| yield train}
   end
 
   def validate!

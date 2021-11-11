@@ -341,7 +341,9 @@ private
   def trains_list_on_station
     @stations.each {|station| puts "For #{station}: #{station.trains}"}
   end
-
+  # def trains_list_on_station
+  #   trains_block {|train| puts train}
+  # end
   def wagons_on_train
     @trains.each {|train| puts "For #{train}: #{train.wagon_amount}"}
   end

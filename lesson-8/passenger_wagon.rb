@@ -2,7 +2,7 @@ require_relative 'wagon'
 require_relative 'manufacturer'
 require_relative 'instancecounter'
 class PassengerWagon < Wagon
-  attr_reader :total_seat
+  attr_reader :total_seat, :occupied_seat
   def initialize(wagon_type = 'passenger', total_seat)
     @total_seat = total_seat
     @wagon_type = wagon_type
@@ -15,9 +15,4 @@ class PassengerWagon < Wagon
       occupied_seat
     end
   end
-
-  def occupied_seat
-    @occupied_seat
-  end
-
 end

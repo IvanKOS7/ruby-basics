@@ -4,7 +4,7 @@ require_relative 'wagon'
 
 
 class CargoWagon < Wagon
-  attr_reader :total_volume
+  attr_reader :total_volume, :occupied_volume
   def initialize(wagon_type = 'cargo', total_volume)
     @occupied_volume = 0
     @total_volume = total_volume
@@ -15,10 +15,6 @@ class CargoWagon < Wagon
     if @total_volume >= volume
       @occupied_volume = volume
     end
-  end
-
-  def occupied_volume
-    @occupied_volume
   end
 
   def free_volume
