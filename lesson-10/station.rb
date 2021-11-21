@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'module_validation'
+require_relative 'module_validation_v2'
 # require_relative 'manufacturer'
 # require_relative 'instancecounter'
 

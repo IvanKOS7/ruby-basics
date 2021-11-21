@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Validation
+module Validation_1
   def self.included(base)
     base.extend ClassMethods
     base.send :include, InstanceMethods
@@ -17,9 +17,6 @@ module Validation
     end
 
     def validate?
-      # здесь у меня в случае оишбки все нормально- возвращается false
-      # но в случае прохождения валидации возвращется true + сообщение
-      # это конечно тупо, но я не смог сделать просто возврат true
       validate! == true
     end
 
