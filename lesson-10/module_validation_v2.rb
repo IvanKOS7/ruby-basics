@@ -12,17 +12,17 @@ module Validation
 
     def validate(attr_name, validation_type, *params)
       @validations ||= []
-      @validation_hash = { attr_name: attr_name, method: "validate_#{validation_type}", params: params }
-      @validations << @validation_hash
+      validation_hash = { attr_name: attr_name, method: "validate_#{validation_type}", params: params }
+      @validations << validation_hash
     end
   end
 
   module InstanceMethods
     def validate!
-      self.class.validations.each do |valid_hash|
-        method = (valid_hash[:method]).to_s.to_sym
-        instance_variable = valid_hash[:attr_name]
-        params = valid_hash[:params]
+      self.class.validations.each do |validation_hash|
+        method = (validation_hash[:method]).to_s.to_sym
+        instance_variable = validation_hash[:attr_name]
+        params = validation_hash[:params]
         send(method, instance_variable_get("@#{instance_variable}"), params)
       end
       true
