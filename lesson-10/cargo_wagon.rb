@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-#require_relative 'instancecounter'
-#require_relative 'manufacturer'
+# require_relative 'instancecounter'
+# require_relative 'manufacturer'
 require_relative 'wagon'
 
 class CargoWagon < Wagon

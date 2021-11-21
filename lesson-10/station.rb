@@ -1,11 +1,13 @@
 # frozen_string_literal: true
+
 require_relative 'module_validation'
-#require_relative 'manufacturer'
-#require_relative 'instancecounter'
+# require_relative 'manufacturer'
+# require_relative 'instancecounter'
 
 class Station
   include Validation
   attr_reader :station_name, :trains
+
   validate :station_name, :format, /\w+/
   @@all = []
   STATION_FORMAT = /\w+/.freeze
@@ -13,9 +15,8 @@ class Station
     @station_name = station_name
     @trains = []
     @@all << self
-    #register_instance
+    # register_instance
   end
-
 
   def trains_block(&block)
     @trains.each(&block)
